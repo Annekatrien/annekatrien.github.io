@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+	<!--create the map view-->
+    <title>Copernicus Networks</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<!--load the libraries you need-->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.31.0/mapbox-gl.css' rel='stylesheet' />
+    <!--initialise map-->
+	<style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+	<div id='map'></div>
+    <script>
+	<!--add content to the map view-->
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5uZWthdHJpZW4iLCJhIjoiV2hLeG0zdyJ9.BKyBhNcWnhK_lm10-zwzjQ'; 
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/annekatrien/ciz5l2ces00dp2rnz3922eyl8' 
+    });
+    
+	<!--add popups to the map view-->
+	<!--Academy layer-->
+	map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ['networks'] 
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML('<h3>' + 'Contact person: ' + feature.properties.POC + '</h3><p>' +'Email address: '+ feature.properties.Email + '</p><p>' +'Phone number: '+ feature.properties.Telephone + '</p>')
+    .setLngLat(feature.geometry.coordinates)
+    .addTo(map);
+});
+	
+	<!--Relays layer-->
+	map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ['networks copy'] 
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML('<h3>' + 'Contact person: ' + feature.properties.POC + '</h3><p>' +'Email address: '+ feature.properties.Email + '</p><p>' +'Phone number: '+ feature.properties.Telephone + '</p>')
+    .setLngLat(feature.geometry.coordinates)
+    .addTo(map);
+});
+    </script>
+  </body>
+</html>
