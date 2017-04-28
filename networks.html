@@ -30,7 +30,7 @@
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW5uZWthdHJpZW4iLCJhIjoiV2hLeG0zdyJ9.BKyBhNcWnhK_lm10-zwzjQ'; 
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/annekatrien/ciz5l2ces00dp2rnz3922eyl8' 
+      style: 'mapbox://styles/annekatrien/cj21v33ja006p2srwecy1sof7' 
     });
     
 	<!--add popups to the map view-->
@@ -48,7 +48,7 @@
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + 'Contact person: ' + feature.properties.POC + '</h3><p>' +'Email address: '+ feature.properties.Email + '</p><p>' +'Phone number: '+ feature.properties.Telephone + '</p>')
+    .setHTML('<h3>' + 'Member: ' + feature.properties.Member + '</h3><p>' +'Contact person: ' +  feature.properties.POC + '<p>' +'Email address: '+ feature.properties.Email + '</p><p>' +'Phone number: '+ feature.properties.Telephone + '</p>')
     .setLngLat(feature.geometry.coordinates)
     .addTo(map);
 });
@@ -67,7 +67,7 @@
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + 'Contact person: ' + feature.properties.POC + '</h3><p>' +'Email address: '+ feature.properties.Email + '</p><p>' +'Phone number: '+ feature.properties.Telephone + '</p>')
+    .setHTML('<h3>' + 'Member: ' + feature.properties.Member + '</h3><p>' +'Contact person: ' +  feature.properties.POC + '<p>'+'Email address: '+ feature.properties.Email + '</p><p>' +'Phone number: '+ feature.properties.Telephone + '</p>')
     .setLngLat(feature.geometry.coordinates)
     .addTo(map);
 });
