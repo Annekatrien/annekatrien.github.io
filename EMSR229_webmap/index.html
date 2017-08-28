@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-heat.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/SanAntonioAOI0.js"></script>
+        <script src="data/MathisAOI1.js"></script>
+        <script src="data/AustinAOI2.js"></script>
+        <script src="data/HoustonAOI3.js"></script>
+        <script src="data/EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4.js"></script>
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[29.8928608397,-96.6699327274],[30.2229323817,-95.9574911289]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>,<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        function setBounds() {
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+        function pop_SanAntonioAOI0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descriptio'] !== null ? Autolinker.link(String(feature.properties['Descriptio'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_SanAntonioAOI0() {
+            return {
+                pane: 'pane_SanAntonioAOI0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+            }
+        }
+        map.createPane('pane_SanAntonioAOI0');
+        map.getPane('pane_SanAntonioAOI0').style.zIndex = 600;
+        map.getPane('pane_SanAntonioAOI0').style['mix-blend-mode'] = 'normal';
+    var layer_SanAntonioAOI0 = new L.geoJson(json_SanAntonioAOI0, {
+        pane: 'pane_SanAntonioAOI0',
+        onEachFeature: pop_SanAntonioAOI0,
+        style: style_SanAntonioAOI0
+    });
+        bounds_group.addLayer(layer_SanAntonioAOI0);
+        feature_group.addLayer(layer_SanAntonioAOI0);
+        function pop_MathisAOI1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descriptio'] !== null ? Autolinker.link(String(feature.properties['Descriptio'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_MathisAOI1() {
+            return {
+                pane: 'pane_MathisAOI1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+            }
+        }
+        map.createPane('pane_MathisAOI1');
+        map.getPane('pane_MathisAOI1').style.zIndex = 601;
+        map.getPane('pane_MathisAOI1').style['mix-blend-mode'] = 'normal';
+    var layer_MathisAOI1 = new L.geoJson(json_MathisAOI1, {
+        pane: 'pane_MathisAOI1',
+        onEachFeature: pop_MathisAOI1,
+        style: style_MathisAOI1
+    });
+        bounds_group.addLayer(layer_MathisAOI1);
+        feature_group.addLayer(layer_MathisAOI1);
+        function pop_AustinAOI2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descriptio'] !== null ? Autolinker.link(String(feature.properties['Descriptio'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_AustinAOI2() {
+            return {
+                pane: 'pane_AustinAOI2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+            }
+        }
+        map.createPane('pane_AustinAOI2');
+        map.getPane('pane_AustinAOI2').style.zIndex = 602;
+        map.getPane('pane_AustinAOI2').style['mix-blend-mode'] = 'normal';
+    var layer_AustinAOI2 = new L.geoJson(json_AustinAOI2, {
+        pane: 'pane_AustinAOI2',
+        onEachFeature: pop_AustinAOI2,
+        style: style_AustinAOI2
+    });
+        bounds_group.addLayer(layer_AustinAOI2);
+        feature_group.addLayer(layer_AustinAOI2);
+        function pop_HoustonAOI3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descriptio'] !== null ? Autolinker.link(String(feature.properties['Descriptio'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_HoustonAOI3() {
+            return {
+                pane: 'pane_HoustonAOI3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+            }
+        }
+        map.createPane('pane_HoustonAOI3');
+        map.getPane('pane_HoustonAOI3').style.zIndex = 603;
+        map.getPane('pane_HoustonAOI3').style['mix-blend-mode'] = 'normal';
+    var layer_HoustonAOI3 = new L.geoJson(json_HoustonAOI3, {
+        pane: 'pane_HoustonAOI3',
+        onEachFeature: pop_HoustonAOI3,
+        style: style_HoustonAOI3
+    });
+        bounds_group.addLayer(layer_HoustonAOI3);
+        feature_group.addLayer(layer_HoustonAOI3);
+        function pop_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? Autolinker.link(String(feature.properties['nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['txt'] !== null ? Autolinker.link(String(feature.properties['txt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source_nam'] !== null ? Autolinker.link(String(feature.properties['source_nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['grading'] !== null ? Autolinker.link(String(feature.properties['grading'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['interpret'] !== null ? Autolinker.link(String(feature.properties['interpret'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['settl_type'] !== null ? Autolinker.link(String(feature.properties['settl_type'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['note'] !== null ? Autolinker.link(String(feature.properties['note'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4() {
+            return {
+                pane: 'pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4',
+                opacity: 1,
+                color: 'rgba(31,120,180,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(31,120,180,1.0)',
+            }
+        }
+        map.createPane('pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4');
+        map.getPane('pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4').style.zIndex = 604;
+        map.getPane('pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4 = new L.geoJson(json_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4, {
+        pane: 'pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4',
+        onEachFeature: pop_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4,
+        style: style_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4
+    });
+        bounds_group.addLayer(layer_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4);
+        feature_group.addLayer(layer_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
