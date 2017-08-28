@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-		<title>EMSR229: Flooding in Houston mapped by Copernicus</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
@@ -11,31 +10,78 @@
         <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/MarkerCluster.css" />
         <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.draw.css" />
+        <link rel="stylesheet" href="css/leaflet.measurecontrol.css" />
         <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
+		body {
+			margin: 0;
+			padding: 0;
+		}
+        #map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
         }
-        </style>
-        <title></title>
+		#disclaimer {
+			position: absolute;
+			top: 10px;
+			left: 50px;
+			height: 150px;
+			z-index: 5;
+			margin-top: 20px;
+			width: 250px;
+			background: rgba(255, 255, 255, 0.8);
+			margin-right: 20px;
+			font-family: Arial, sans-serif;
+			overflow: auto;
+			border-radius: 3px;
+			}
+		h2,h3 {
+			margin: 10px;
+			font-size: 1.2em;
+		}
+
+		h3 {
+			font-size: 1em;
+		}
+
+		p {
+			font-size: 0.85em;
+			margin: 10px;
+			text-align: left;
+		}
+		
+		</style>
+        <title>EMSR229: Flooding in Houston mapped by Copernicus</title>
     </head>
     <body>
-        <div id="map">
-        </div>
+        <!--div for map-->
+		<div id="map"></div>
+		<!-- Box with disclaimer -->
+		<div id='disclaimer'><h2>EMSR229: Flooding in Houston mapped by Copernicus</h2><div><p>Source: <a href="http://emergency.copernicus.eu/mapping/list-of-components/EMSR229">Copernicus Emergency Management Service (© 2017 European Union), EMSR229</a><p></div></div>
+			
         <script src="js/leaflet.js"></script>
         <script src="js/leaflet-heat.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/OSMBuildings-Leaflet.js"></script>
         <script src="js/leaflet-hash.js"></script>
         <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.draw.js"></script>
+        <script src="js/leaflet.measurecontrol.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
         <script src="data/SanAntonioAOI0.js"></script>
         <script src="data/MathisAOI1.js"></script>
         <script src="data/AustinAOI2.js"></script>
         <script src="data/HoustonAOI3.js"></script>
-        <script src="data/EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4.js"></script>
+        <script src="data/EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4.js"></script>
+        <script src="data/EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5.js"></script>
+        <script src="data/EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6.js"></script>
+        <script src="data/EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7.js"></script>
+        <script src="data/EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8.js"></script>
+        <script src="data/EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9.js"></script>
         <script>
         L.ImageOverlay.include({
             getBounds: function () {
@@ -43,8 +89,9 @@
             }
         });
         var map = L.map('map', {
+            measureControl:true,
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[29.8928608397,-96.6699327274],[30.2229323817,-95.9574911289]]);
+        }).fitBounds([[28.9605336632,-98.9971794364],[30.5542105378,-95.5675015781]]);
         var hash = new L.Hash(map);
         map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
         var feature_group = new L.featureGroup([]);
@@ -198,7 +245,260 @@
     });
         bounds_group.addLayer(layer_HoustonAOI3);
         feature_group.addLayer(layer_HoustonAOI3);
-        function pop_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4(feature, layer) {
+        function pop_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? Autolinker.link(String(feature.properties['nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['txt'] !== null ? Autolinker.link(String(feature.properties['txt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['change_sta'] !== null ? Autolinker.link(String(feature.properties['change_sta'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source_nam'] !== null ? Autolinker.link(String(feature.properties['source_nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['grading'] !== null ? Autolinker.link(String(feature.properties['grading'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin_lev'] !== null ? Autolinker.link(String(feature.properties['admin_lev'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['functional'] !== null ? Autolinker.link(String(feature.properties['functional'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4() {
+            return {
+                pane: 'pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4',
+                opacity: 1,
+                color: 'rgba(192,223,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'round',
+                weight: 2.0,
+            }
+        }
+        map.createPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4');
+        map.getPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4').style.zIndex = 604;
+        map.getPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4 = new L.geoJson(json_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4, {
+        pane: 'pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4',
+        onEachFeature: pop_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4,
+        style: style_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4
+    });
+        bounds_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4);
+        feature_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONv1300000hydrographyline4);
+        function pop_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? Autolinker.link(String(feature.properties['nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['txt'] !== null ? Autolinker.link(String(feature.properties['txt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['change_sta'] !== null ? Autolinker.link(String(feature.properties['change_sta'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source_nam'] !== null ? Autolinker.link(String(feature.properties['source_nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin_lev'] !== null ? Autolinker.link(String(feature.properties['admin_lev'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['functional'] !== null ? Autolinker.link(String(feature.properties['functional'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5() {
+            return {
+                pane: 'pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5',
+                opacity: 1,
+                color: 'rgba(192,223,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'round',
+                weight: 2.0,
+            }
+        }
+        map.createPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5');
+        map.getPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5').style.zIndex = 605;
+        map.getPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5 = new L.geoJson(json_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5, {
+        pane: 'pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5',
+        onEachFeature: pop_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5,
+        style: style_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5
+    });
+        bounds_group.addLayer(layer_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5);
+        feature_group.addLayer(layer_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographyline5);
+        function pop_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? Autolinker.link(String(feature.properties['nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['txt'] !== null ? Autolinker.link(String(feature.properties['txt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source_nam'] !== null ? Autolinker.link(String(feature.properties['source_nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['functional'] !== null ? Autolinker.link(String(feature.properties['functional'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin_lev'] !== null ? Autolinker.link(String(feature.properties['admin_lev'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6() {
+            return {
+                pane: 'pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6',
+                opacity: 1,
+                color: 'rgba(114,133,132,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(165,191,221,1.0)',
+            }
+        }
+        map.createPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6');
+        map.getPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6').style.zIndex = 606;
+        map.getPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6 = new L.geoJson(json_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6, {
+        pane: 'pane_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6',
+        onEachFeature: pop_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6,
+        style: style_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6
+    });
+        bounds_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6);
+        feature_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONv1300000hydrographypoly6);
+        function pop_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? Autolinker.link(String(feature.properties['nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['txt'] !== null ? Autolinker.link(String(feature.properties['txt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source_nam'] !== null ? Autolinker.link(String(feature.properties['source_nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['functional'] !== null ? Autolinker.link(String(feature.properties['functional'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin_lev'] !== null ? Autolinker.link(String(feature.properties['admin_lev'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7() {
+            return {
+                pane: 'pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7',
+                opacity: 1,
+                color: 'rgba(114,133,132,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(165,191,221,1.0)',
+            }
+        }
+        map.createPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7');
+        map.getPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7').style.zIndex = 607;
+        map.getPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7 = new L.geoJson(json_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7, {
+        pane: 'pane_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7',
+        onEachFeature: pop_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7,
+        style: style_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7
+    });
+        bounds_group.addLayer(layer_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7);
+        feature_group.addLayer(layer_EMSR22904SANANTONIO01DELINEATIONv1230000hydrographypoly7);
+        function pop_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
@@ -236,16 +536,13 @@
                     <tr>\
                         <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
                     </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['note'] !== null ? Autolinker.link(String(feature.properties['note'])) : '') + '</td>\
-                    </tr>\
                 </table>';
             layer.bindPopup(popupContent);
         }
 
-        function style_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4() {
+        function style_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8() {
             return {
-                pane: 'pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4',
+                pane: 'pane_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8',
                 opacity: 1,
                 color: 'rgba(31,120,180,1.0)',
                 dashArray: '',
@@ -256,37 +553,84 @@
                 fillColor: 'rgba(31,120,180,1.0)',
             }
         }
-        map.createPane('pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4');
-        map.getPane('pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4').style.zIndex = 604;
-        map.getPane('pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4').style['mix-blend-mode'] = 'normal';
-    var layer_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4 = new L.geoJson(json_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4, {
-        pane: 'pane_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4',
-        onEachFeature: pop_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4,
-        style: style_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4
+        map.createPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8');
+        map.getPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8').style.zIndex = 608;
+        map.getPane('pane_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8 = new L.geoJson(json_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8, {
+        pane: 'pane_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8',
+        onEachFeature: pop_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8,
+        style: style_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8
     });
-        bounds_group.addLayer(layer_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4);
-        feature_group.addLayer(layer_EMSR22901AUSTIN01DELINEATIONv0300000FirstAvailableMapcrisisinformationpoly4);
+        bounds_group.addLayer(layer_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8);
+        feature_group.addLayer(layer_EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly8);
+        function pop_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? Autolinker.link(String(feature.properties['nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['txt'] !== null ? Autolinker.link(String(feature.properties['txt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source_nam'] !== null ? Autolinker.link(String(feature.properties['source_nam'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['grading'] !== null ? Autolinker.link(String(feature.properties['grading'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['interpret'] !== null ? Autolinker.link(String(feature.properties['interpret'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['settl_type'] !== null ? Autolinker.link(String(feature.properties['settl_type'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9() {
+            return {
+                pane: 'pane_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9',
+                opacity: 1,
+                color: 'rgba(31,120,180,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(31,120,180,1.0)',
+            }
+        }
+        map.createPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9');
+        map.getPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9').style.zIndex = 609;
+        map.getPane('pane_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9 = new L.geoJson(json_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9, {
+        pane: 'pane_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9',
+        onEachFeature: pop_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9,
+        style: style_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9
+    });
+        bounds_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9);
+        feature_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONv1300000crisisinformationpoly9);
         raster_group.addTo(map);
         feature_group.addTo(map);
         setBounds();
         </script>
-		<div class='disclaimer'>
-		<div class='title'>EMSR229: Flooding in Houston mapped by Copernicus</div>
-		<div class='source'>Source: <a href="http://emergency.copernicus.eu/mapping/list-of-components/EMSR229">Copernicus Emergency Management Service (© 2015 European Union), EMSR229</a></div>
-		</div>
-		</div>
-		<style type='text/css'>
-			.disclaimer .title {
-			text-align: left;
-			margin-bottom: 8px;
-			font-weight: bold;
-			font-size: 90%;
-			}
-			.disclaimer .source {
-			clear: both;
-			color: #999;
-			font-size: 70%;
-			}
-		</style>
     </body>
 </html>
