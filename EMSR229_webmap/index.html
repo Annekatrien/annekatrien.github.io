@@ -81,8 +81,9 @@
         <script src="data/EMSR22901HOUSTON01DELINEATIONv1440000hydrographyline6.js"></script>
         <script src="data/EMSR22904SANANTONIO01DELINEATIONv1230000crisisinformationpoly7.js"></script>
         <script src="data/EMSR22902AUSTIN01DELINEATIONMONIT01v1300000crisisinformationpoly8.js"></script>
-        <script src="data/EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9.js"></script>
-        <script src="data/EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10.js"></script>
+        <script src="data/Houstonmonitoring29.js"></script>
+        <script src="data/Houstonmonitoring110.js"></script>
+        <script src="data/EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11.js"></script>
         <script>
         L.ImageOverlay.include({
             getBounds: function () {
@@ -92,7 +93,7 @@
         var map = L.map('map', {
             measureControl:true,
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[27.5496675343,-100.38421236],[30.7555695369,-90.1529823445]]);
+        }).fitBounds([[27.5798959639,-99.6597300721],[30.7759576745,-92.8197504549]]);
         var hash = new L.Hash(map);
         map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
         var feature_group = new L.featureGroup([]);
@@ -571,7 +572,7 @@
     });
         bounds_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONMONIT01v1300000crisisinformationpoly8);
         feature_group.addLayer(layer_EMSR22902AUSTIN01DELINEATIONMONIT01v1300000crisisinformationpoly8);
-        function pop_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9(feature, layer) {
+        function pop_Houstonmonitoring29(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
@@ -598,9 +599,9 @@
             layer.bindPopup(popupContent);
         }
 
-        function style_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9() {
+        function style_Houstonmonitoring29() {
             return {
-                pane: 'pane_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9',
+                pane: 'pane_Houstonmonitoring29',
                 opacity: 1,
                 color: 'rgba(10,22,156,1.0)',
                 dashArray: '',
@@ -611,17 +612,67 @@
                 fillColor: 'rgba(10,22,156,1.0)',
             }
         }
-        map.createPane('pane_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9');
-        map.getPane('pane_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9').style.zIndex = 609;
-        map.getPane('pane_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9').style['mix-blend-mode'] = 'normal';
-    var layer_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9 = new L.geoJson(json_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9, {
-        pane: 'pane_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9',
-        onEachFeature: pop_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9,
-        style: style_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9
+        map.createPane('pane_Houstonmonitoring29');
+        map.getPane('pane_Houstonmonitoring29').style.zIndex = 609;
+        map.getPane('pane_Houstonmonitoring29').style['mix-blend-mode'] = 'normal';
+    var layer_Houstonmonitoring29 = new L.geoJson(json_Houstonmonitoring29, {
+        pane: 'pane_Houstonmonitoring29',
+        onEachFeature: pop_Houstonmonitoring29,
+        style: style_Houstonmonitoring29
     });
-        bounds_group.addLayer(layer_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9);
-        feature_group.addLayer(layer_EMSR22901HOUSTON01DELINEATIONMONIT01v1440000crisisinformationpoly9);
-        function pop_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10(feature, layer) {
+        bounds_group.addLayer(layer_Houstonmonitoring29);
+        feature_group.addLayer(layer_Houstonmonitoring29);
+        function pop_Houstonmonitoring110(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_scale'] !== null ? Autolinker.link(String(feature.properties['ext_scale'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ext_date'] !== null ? Autolinker.link(String(feature.properties['ext_date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src_info'] !== null ? Autolinker.link(String(feature.properties['src_info'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['act_id'] !== null ? Autolinker.link(String(feature.properties['act_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['interpret'] !== null ? Autolinker.link(String(feature.properties['interpret'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['subtype'] !== null ? Autolinker.link(String(feature.properties['subtype'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Houstonmonitoring110() {
+            return {
+                pane: 'pane_Houstonmonitoring110',
+                opacity: 1,
+                color: 'rgba(10,22,156,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(10,22,156,1.0)',
+            }
+        }
+        map.createPane('pane_Houstonmonitoring110');
+        map.getPane('pane_Houstonmonitoring110').style.zIndex = 610;
+        map.getPane('pane_Houstonmonitoring110').style['mix-blend-mode'] = 'normal';
+    var layer_Houstonmonitoring110 = new L.geoJson(json_Houstonmonitoring110, {
+        pane: 'pane_Houstonmonitoring110',
+        onEachFeature: pop_Houstonmonitoring110,
+        style: style_Houstonmonitoring110
+    });
+        bounds_group.addLayer(layer_Houstonmonitoring110);
+        feature_group.addLayer(layer_Houstonmonitoring110);
+        function pop_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['src_date'] !== null ? Autolinker.link(String(feature.properties['src_date'])) : '') + '</td>\
@@ -663,9 +714,9 @@
             layer.bindPopup(popupContent);
         }
 
-        function style_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10() {
+        function style_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11() {
             return {
-                pane: 'pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10',
+                pane: 'pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11',
                 opacity: 1,
                 color: 'rgba(10,22,156,1.0)',
                 dashArray: '',
@@ -676,16 +727,16 @@
                 fillColor: 'rgba(10,22,156,1.0)',
             }
         }
-        map.createPane('pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10');
-        map.getPane('pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10').style.zIndex = 610;
-        map.getPane('pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10').style['mix-blend-mode'] = 'normal';
-    var layer_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10 = new L.geoJson(json_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10, {
-        pane: 'pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10',
-        onEachFeature: pop_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10,
-        style: style_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10
+        map.createPane('pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11');
+        map.getPane('pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11').style.zIndex = 611;
+        map.getPane('pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11').style['mix-blend-mode'] = 'normal';
+    var layer_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11 = new L.geoJson(json_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11, {
+        pane: 'pane_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11',
+        onEachFeature: pop_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11,
+        style: style_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11
     });
-        bounds_group.addLayer(layer_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10);
-        feature_group.addLayer(layer_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly10);
+        bounds_group.addLayer(layer_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11);
+        feature_group.addLayer(layer_EMSR22903MATHIS01DELINEATIONMONIT01v1225000crisisinformationpoly11);
         raster_group.addTo(map);
         feature_group.addTo(map);
         setBounds();
