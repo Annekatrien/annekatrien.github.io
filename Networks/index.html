@@ -10,8 +10,6 @@
         <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/MarkerCluster.css" />
         <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
-        <link rel="stylesheet" href="css/leaflet.draw.css" />
-        <link rel="stylesheet" href="css/leaflet.measurecontrol.css" />
         <style>
         html, body, #map {
             width: 100%;
@@ -31,20 +29,23 @@
         <script src="js/OSMBuildings-Leaflet.js"></script>
         <script src="js/leaflet-hash.js"></script>
         <script src="js/Autolinker.min.js"></script>
-        <script src="js/leaflet.draw.js"></script>
-        <script src="js/leaflet.measurecontrol.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
-        <script src="data/Members24August20170.js"></script>
+        <script src="data/Relays0.js"></script>
+        <script src="data/Academy1.js"></script>
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
         L.ImageOverlay.include({
             getBounds: function () {
                 return this._bounds;
             }
         });
         var map = L.map('map', {
-            measureControl:true,
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[-46.6789102165,-149.531783983],[80.4711612881,-144.725322591]]);
+        })
         var hash = new L.Hash(map);
         map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
         var feature_group = new L.featureGroup([]);
@@ -56,6 +57,9 @@
         });
         basemap0.addTo(map);
         function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
         }
         function geoJson2heat(geojson, weight) {
           return geojson.features.map(function(feature) {
@@ -66,10 +70,25 @@
             ];
           });
         }
-        function pop_Members24August20170(feature, layer) {
+        function pop_Relays0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['POC'] !== null ? Autolinker.link(String(feature.properties['POC'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['X'] !== null ? Autolinker.link(String(feature.properties['X'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Y'] !== null ? Autolinker.link(String(feature.properties['Y'])) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Network'] !== null ? Autolinker.link(String(feature.properties['Network'])) : '') + '</td>\
@@ -78,56 +97,163 @@
                         <td colspan="2">' + (feature.properties['Member'] !== null ? Autolinker.link(String(feature.properties['Member'])) : '') + '</td>\
                     </tr>\
                     <tr>\
+                        <td colspan="2">' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Area_Exper'] !== null ? Autolinker.link(String(feature.properties['Area_Exper'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Applicatio'] !== null ? Autolinker.link(String(feature.properties['Applicatio'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['First_name'] !== null ? Autolinker.link(String(feature.properties['First_name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Last_name'] !== null ? Autolinker.link(String(feature.properties['Last_name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POC'] !== null ? Autolinker.link(String(feature.properties['POC'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
                         <td colspan="2">' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Twitter'] !== null ? Autolinker.link(String(feature.properties['Twitter'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Instagram'] !== null ? Autolinker.link(String(feature.properties['Instagram'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Linkedin'] !== null ? Autolinker.link(String(feature.properties['Linkedin'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Youtube'] !== null ? Autolinker.link(String(feature.properties['Youtube'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Links'] !== null ? Autolinker.link(String(feature.properties['Links'])) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent);
         }
 
-        function style_Members24August20170(feature) {
-            switch(feature.properties['Network']) {
-                case 'Academy':
-                    return {
-                pane: 'pane_Members24August20170',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(0,0,0,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fillOpacity: 1,
-                fillColor: 'rgba(1,82,232,1.0)',
-            }
-                    break;
-                case 'Relays':
-                    return {
-                pane: 'pane_Members24August20170',
-                radius: 4.0,
-                opacity: 1,
-                color: 'rgba(0,0,0,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fillOpacity: 1,
-                fillColor: 'rgba(220,231,3,1.0)',
-            }
-                    break;
+        function style_Relays0() {
+            return {
+                pane: 'pane_Relays0',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/amenity_information.svg',
+            iconSize: [19.0, 19.0]
+        }),
             }
         }
-        map.createPane('pane_Members24August20170');
-        map.getPane('pane_Members24August20170').style.zIndex = 600;
-        map.getPane('pane_Members24August20170').style['mix-blend-mode'] = 'normal';
-        var layer_Members24August20170 = new L.geoJson(json_Members24August20170, {
-            pane: 'pane_Members24August20170',
-            onEachFeature: pop_Members24August20170,
+        map.createPane('pane_Relays0');
+        map.getPane('pane_Relays0').style.zIndex = 600;
+        map.getPane('pane_Relays0').style['mix-blend-mode'] = 'normal';
+        var layer_Relays0 = new L.geoJson(json_Relays0, {
+            pane: 'pane_Relays0',
+            onEachFeature: pop_Relays0,
             pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, style_Members24August20170(feature))
+                return L.marker(latlng, style_Relays0(feature))
             }
         });
-        bounds_group.addLayer(layer_Members24August20170);
-        feature_group.addLayer(layer_Members24August20170);
+        bounds_group.addLayer(layer_Relays0);
+        feature_group.addLayer(layer_Relays0);
+        function pop_Academy1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X'] !== null ? Autolinker.link(String(feature.properties['X'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Y'] !== null ? Autolinker.link(String(feature.properties['Y'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Network'] !== null ? Autolinker.link(String(feature.properties['Network'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Member'] !== null ? Autolinker.link(String(feature.properties['Member'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Area_Exper'] !== null ? Autolinker.link(String(feature.properties['Area_Exper'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Applicatio'] !== null ? Autolinker.link(String(feature.properties['Applicatio'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['First_name'] !== null ? Autolinker.link(String(feature.properties['First_name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Last_name'] !== null ? Autolinker.link(String(feature.properties['Last_name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POC'] !== null ? Autolinker.link(String(feature.properties['POC'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Twitter'] !== null ? Autolinker.link(String(feature.properties['Twitter'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Facebook'] !== null ? Autolinker.link(String(feature.properties['Facebook'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Instagram'] !== null ? Autolinker.link(String(feature.properties['Instagram'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Linkedin'] !== null ? Autolinker.link(String(feature.properties['Linkedin'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Youtube'] !== null ? Autolinker.link(String(feature.properties['Youtube'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Links'] !== null ? Autolinker.link(String(feature.properties['Links'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_Academy1() {
+            return {
+                pane: 'pane_Academy1',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/education_university.svg',
+            iconSize: [19.0, 19.0]
+        }),
+            }
+        }
+        map.createPane('pane_Academy1');
+        map.getPane('pane_Academy1').style.zIndex = 601;
+        map.getPane('pane_Academy1').style['mix-blend-mode'] = 'normal';
+        var layer_Academy1 = new L.geoJson(json_Academy1, {
+            pane: 'pane_Academy1',
+            onEachFeature: pop_Academy1,
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, style_Academy1(feature))
+            }
+        });
+        bounds_group.addLayer(layer_Academy1);
+        feature_group.addLayer(layer_Academy1);
         raster_group.addTo(map);
         feature_group.addTo(map);
         setBounds();
